@@ -14,8 +14,8 @@ router.get('/functions', async (req, res) => {
 
 router.post('/functions', async (req, res) => {
   try {
-    if (!req.body.name) res.status(422).send({ error: 'Function name is required!' })
-    if (req.body.name.toLowerCase() === 'new') res.status(422).send({ error: 'Function name is not available!' })
+    if (!req.body.name) return res.status(422).send({ error: 'Function name is required!' })
+    if (req.body.name.toLowerCase() === 'new') return res.status(422).send({ error: 'Function name is not available!' })
     let found = await Fun.findOne({ name: req.body.name, user: req.session.user._id })
     if (found) return res.status(422).send({ error: 'You can not have more than one function with the same name!' })
     let fun = new Fun({
