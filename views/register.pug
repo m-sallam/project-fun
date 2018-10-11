@@ -1,0 +1,39 @@
+extends layout.pug
+
+block assets
+  style.
+    .topbar {
+      background-color: hsl(0, 0%, 96%);
+    }
+
+block content
+  section.section
+    .columns
+      .column.is-one-fifth-tablet
+      .column
+        if (error.message)
+          .notification.is-danger= error.message
+        .box
+          form(method="post")
+            .field: p.control.has-icons-left
+              input.input(type="text", placeholder="Username", name="username", required, value=body.username)
+              span.icon.is-small.is-left
+                i.fa.fa-user
+              p.help username must be at least 4 characters long
+            .field: p.control.has-icons-left
+              input.input(type="email", placeholder="E-mail", name="email", required, value=body.email)
+              span.icon.is-small.is-left
+                i.fa.fa-envelope
+              p.help enter a valid e-mail
+            .field: p.control.has-icons-left
+              input.input(type="text", placeholder="Name", name="name", required, value=body.name)
+              span.icon.is-small.is-left
+                i.fa.fa-user
+              p.help name is required
+            .field: p.control.has-icons-left
+              input.input(type="password", placeholder="Password", name="password", required, value=body.password)
+              span.icon.is-small.is-left
+                i.fa.fa-lock
+              p.help password must be at least 6 characters long
+            button.button.is-fullwidth.is-outlined.is-success Register
+      .column.is-one-fifth-tablet

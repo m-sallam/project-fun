@@ -1,0 +1,68 @@
+doctype html
+
+head
+  meta(http-equiv="Content-Type", content="text/html;charset=UTF-8")
+  meta(name="viewport", content="width=device-width, initial-scale=1")
+  title Project-Fun
+  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css")
+  script(defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js")
+  block assets
+
+body
+  section.section.topbar
+    nav.level.is-mobile
+      .level-left
+        .level-item
+          a.nvabar-item(href="/")
+            img(src="/logo_transparent_c.png", alt="Project-Fun", style="width: 200px")
+      .level-right
+        if (!user)
+          .level-item
+            a.button.is-success.is-rounded(href="/register")
+              span.icon
+                i.fa.fa-user
+              span REGISTER
+          .level-item
+            a.button.is-info(href="/login")
+              span.icon
+                i.fa.fa-lock
+              span LOGIN
+        else
+          .level-item
+            a.button.is-warning(href="/logout")
+              span.icon
+                i.fa.fa-sign-out-alt
+              span LOGOUT
+
+    //- nav.navbar.is-info
+    //-   .navbar-brand
+    //-     a.nvabar-item(href="/")
+    //-       img(src="/logo_transparent_c.png", alt="Project-Fun", style="height: 100%; width: 190px")
+    //-   .navbar-menu
+    //-    .navbar-end
+    //-     .navbar-item
+    //-       a.button.is-success.is-rounded(href="/register")
+    //-         span.icon
+    //-           i.fa.fa-user
+    //-         span REGISTER
+    //-     .navbar-item
+    //-       a.button.is-info(href="/login")
+    //-         span.icon
+    //-           i.fa.fa-lock
+    //-         span LOGIN
+      
+
+  //- header.navbar.bg-gray.p-2(style="height: 55px")
+  //-   section.navbar-section
+  //-     a.navbar-brand(href="/") PROJECT-FUN
+  //-   section.navbar-section
+  //-     if (user)
+  //-       a.btn.btn-link(href="/logout") LOGOUT
+  //-     else
+  //-       a.btn.btn-primary(href="/register") REGISTER
+  //-       a.btn.btn-link(href="/login") LOGIN
+
+
+  block content
+
+  

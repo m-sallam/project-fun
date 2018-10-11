@@ -1,0 +1,53 @@
+extends layout.pug
+
+block assets
+  style.
+    .topbar {
+      background-color: hsl(0, 0%, 96%);
+    }
+  script(src="/js/ace.js")
+
+block content
+  .section
+    .field: p.control
+      input.input#functionName(type="text", placeholder="Function Name")
+      p.help#hint required field
+    pre#editor(style="width: 100%; height: 50vh;")
+    br
+    button.button.is-fullwidth#create Create
+
+  script.
+    var editor = ace.edit("editor")
+    editor.setTheme("ace/theme/twilight")
+    editor.session.setMode("ace/mode/javascript")
+    let createButton = document.getElementById('create')
+    let functionName = document.getElementById('functionName')
+    let hint = document.getElementById('hint')
+    createButton.addEventListener('click', async (e) => {
+      if (functionName.value.trim()) {
+        functionName.classList.remove('is-danger')
+        functionName.setAttribute('disabled', true)
+        createButton.classList.add('is-loading')
+        let res = await fetch('/functions', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify({content: editor.getValue(), name: functionName.value.trim()})
+        })
+        if (res.status === 200) {
+          window.location = '/functions/' + functionName.value.trim()
+        } else {
+          let response = await res.json()
+          createButton.classList.remove('is-loading')
+          functionName.classList.add('is-danger')
+          functionName.removeAttribute('disabled')
+          hint.innerHTML = response.error ? response.error : 'An error occured, please try again later!'
+        }
+      } else {
+        createButton.classList.remove('is-loading')
+        functionName.classList.add('is-danger')
+      }
+    })
+
+     

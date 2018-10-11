@@ -1,0 +1,45 @@
+extends layout.pug
+
+block assets
+  style.
+    .topbar {
+      background-color: hsl(0, 0%, 96%);
+    }
+  script(src="/js/ace.js")
+
+block content
+  section.section
+    .level
+      .level-left: .level-item
+        h1.title#name= fun.name
+      .level-right: .level-item
+        a.button.is-danger#delete
+          span.icon
+            i.fa.fa-trash
+          span Delete Function
+    pre#editor(style="width: 100%; height: 50vh;")= fun.content
+    br
+    h3.subtitle Invoke URL: 
+      a(href="/api/function/invoke/" + fun._id, target="_blank", rel="noopener noreferrer") Invoke
+    h6 *function arguments are passed as query string to the the invoke url.
+
+    script.
+      var editor = ace.edit("editor")
+      editor.setReadOnly(true)
+      editor.setTheme("ace/theme/twilight")
+      editor.session.setMode("ace/mode/javascript")
+      let deteButton = document.getElementById('delete')
+      let functionName = document.getElementById('name').innerHTML
+      deteButton.addEventListener('click', async () => {
+        let con = confirm('Delete Function?')
+        if (con) {
+          let res = await fetch('/functions/' + functionName, {
+            method: 'delete'
+          })
+          if (res.status === 200) {
+            window.location = '/'
+          } else {
+            alert('An error occured, try again later!')
+          }
+        } 
+      })

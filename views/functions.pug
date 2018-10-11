@@ -1,0 +1,23 @@
+extends layout.pug
+
+block assets
+  style.
+    .topbar {
+      background-color: hsl(0, 0%, 96%);
+    }
+
+block content
+  section.section: .container
+    .level.is-mobile
+      .level-left: .level-item
+        h1.title My Functions
+      .level-right: .level-item
+        a.button.is-outlined.is-info(href="/functions/new")
+          span.icon.is-small
+            i.fa.fa-plus
+    .box.menu
+      ul.menu-list(style="overflow: auto; height: 50vh;")
+        each fun in funs
+          li
+            a(href="/functions/" + fun.name)= fun.name
+
